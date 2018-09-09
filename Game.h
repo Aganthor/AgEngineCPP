@@ -1,0 +1,20 @@
+#pragma once
+
+#include <SFML/Window.hpp>
+
+///////////////////////////////////////////////////////////////////////////////
+// Main game class. Will hold about everything! Will also be responsible to
+// manage the window.
+///////////////////////////////////////////////////////////////////////////////
+
+class Game
+{
+public:
+	Game();
+	~Game();
+
+	void Run();
+
+private:
+	sf::Window m_SFMLWindow;
+};

@@ -32,20 +32,20 @@ namespace ecs
 	//////////////////////////////////////////////////////////////////////////////
 	std::uint32_t EntityManager::generateNewID()
 	{
-		if (m_lowestUnassignedID < UINT32_MAX)
-			return m_lowestUnassignedID++;
-		else
-		{
-			for (auto i = 1; i < UINT32_MAX; ++i)
-			{
-				auto entity = std::find_if(m_entities.begin(), m_entities.end(), [i](const auto &e) -> bool
-				{
-					return e->getID() == i;
-				});
-				if (entity != std::end(m_entities))
-					return i;
-			}
-		}
+		// if (m_lowestUnassignedID < UINT32_MAX)
+		// 	return m_lowestUnassignedID++;
+		// else
+		// {
+		// 	for (auto i = 1; i < UINT32_MAX; ++i)
+		// 	{
+		// 		auto entity = std::find_if(m_entities.begin(), m_entities.end(), [i](const auto &e) -> bool
+		// 		{
+		// 			return e->getID() == i;
+		// 		});
+		// 		if (entity != std::end(m_entities))
+		// 			return i;
+		// 	}
+		// }
 
 		//Error... to be logged...
 		return 0;
@@ -53,19 +53,15 @@ namespace ecs
 
 	//////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////
-	std::shared_ptr<Entity> EntityManager::createEntity()
-	{
-		auto id = generateNewID();
-		//m_entities.push_back(id);
+	// std::shared_ptr<Entity> EntityManager::createEntity()
+	// {
+	// 	auto id = generateNewID();
+	// 	//m_entities.push_back(id);
 
-		return std::make_shared<Entity>(id);
-	}
+	// 	return std::make_shared<Entity>(id);
+	// }
 
 	//////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////
-	template <typename ComponentType, typename EntityType>
-	void EntityManager::addComponent(ComponentType* component, EntityType* entity)
-	{
 
-	}
 }

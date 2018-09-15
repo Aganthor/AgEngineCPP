@@ -8,18 +8,21 @@ Game::~Game()
 {
 }
 
-void Game::Run()
+void Game::init()
 {
-	m_SFMLWindow.create(sf::VideoMode(800, 600), "AgEngine demo!");
+  m_SFMLWindow.create(sf::VideoMode(800, 600), "AgEngine demo!");
+}
 
-	while (m_SFMLWindow.isOpen())
-	{
-		sf::Event event;
+void Game::run()
+{
+  while (m_SFMLWindow.isOpen())
+  {
+    sf::Event event;
 
-		while (m_SFMLWindow.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				m_SFMLWindow.close();
-		}
-	}
+    while (m_SFMLWindow.pollEvent(event))
+    {
+      if (event.type == sf::Event::Closed)
+        m_SFMLWindow.close();
+    }
+  }
 }

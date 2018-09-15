@@ -1,22 +1,20 @@
 #pragma once
 
-#include <string>
 ///////////////////////////////////////////////////////////////////////////////
 // Component base class. Entirely empty. Subclasses will specialize.
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace ecs
 {
-	class Component
-	{
-	public:
-		Component() {};
-		Component(const std::string& name) : m_ComponentName{ name } {};
-		~Component() {};
+/* class Entity; */
 
-		const std::string& getName(void) const { return m_ComponentName; }
+/* struct Component */
+/* { */
+/*   Entity* m_entity; */
 
-	private:
-		std::string m_ComponentName;
-	};
+/*   virtual void init() {} */
+/*   virtual void update(float mFT) {} */
+
+/*   virtual ~Component() {} */
+/* }; */
 }

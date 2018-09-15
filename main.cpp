@@ -6,7 +6,9 @@ int main(void)
 {
 	Game game;
 
-	game.Run();
+    game.init();
+
+	game.run();
 
 	return 0;
 }

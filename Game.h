@@ -10,11 +10,13 @@
 class Game
 {
 public:
-	Game();
-	~Game();
+  Game();
+  ~Game();
 
-	void Run();
+
+  void run();
+  void init();
 
 private:
-	sf::Window m_SFMLWindow;
+  sf::Window m_SFMLWindow;
 };

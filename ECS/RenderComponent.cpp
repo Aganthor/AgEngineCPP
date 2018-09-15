@@ -2,7 +2,7 @@
 
 namespace ecs
 {
-	RenderComponent::RenderComponent(const std::string & filename) : Component{ "render" }
+RenderComponent::RenderComponent(const std::string & filename)// : Component{ "render" }
 	{
 		loadSprite(filename);
 	}

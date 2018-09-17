@@ -1,4 +1,4 @@
-#include "map.h"
+#include "worldmap.h"
 
 #include <noise/noise.h>
 #include "../noiseutils/noiseutils.h"
@@ -9,15 +9,15 @@ using namespace noise;
 namespace map
 {
 
-Map::Map()
+WorldMap::WorldMap()
 {
 }
 
-Map::~Map()
+WorldMap::~WorldMap()
 {
 }
 
-void Map::generateMap()
+void WorldMap::generateMap()
 {
   module::Perlin myModule;
   utils::NoiseMap heightMap;
@@ -31,7 +31,7 @@ void Map::generateMap()
 
 }
 
-bool Map::LoadMap(const std::string& file)
+bool WorldMap::LoadMap(const std::string& file)
 {
   return true;
 }

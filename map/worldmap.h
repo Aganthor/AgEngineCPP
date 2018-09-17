@@ -7,11 +7,11 @@
 namespace map
 {
 
-class Map
+class WorldMap
 {
 public:
-  Map();
-  ~Map();
+  WorldMap();
+  ~WorldMap();
 
   void generateMap();
   bool LoadMap(const std::string& file);

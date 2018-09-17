@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Main game class. Will hold about everything! Will also be responsible to
@@ -18,5 +18,5 @@ public:
   void init();
 
 private:
-  sf::Window m_SFMLWindow;
+  sf::RenderWindow m_SFMLWindow;
 };

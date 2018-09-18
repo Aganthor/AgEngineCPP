@@ -19,6 +19,9 @@ endif()
 #Include SOL2 header files
 include_directories(${CMAKE_SOURCE_DIR}/sol2/include)
 
+#Include ImGUI to the project.
+include_directories${CMAKE_SOURCE_DIR}/imgui)
+
 add_subdirectory(noiseutils)
 add_subdirectory(ECS)
 add_subdirectory(map)

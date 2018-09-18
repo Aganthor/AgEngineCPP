@@ -4,9 +4,20 @@ project(AgEngine VERSION 0.1 LANGUAGES CXX)
 
 add_executable(AgEngine main.cpp Game.cpp)
 
+#SFML linking and include
 find_package(SFML REQUIRED COMPONENTS audio graphics window system)
 if(NOT SFML_FOUND)
     message(FATAL_ERROR "SFML couldn't be located!")
+endif()
+
+#Need to find and link OpenGL for imgui stuff
+find_package(OpenGL REQUIRED)
+if (OPENGL_FOUND)
+    message("opengl found")
+    message("include dir: " ${OPENGL_INCLUDE_DIR})
+    message("link libraries: " ${OPENGL_LIBRAIRIES})
+else (OPENGL_FOUND)
+    message("opengl not found")
 endif()
 
 # Include the libnoise library for perlin noise :)
@@ -20,13 +31,14 @@ endif()
 include_directories(${CMAKE_SOURCE_DIR}/sol2/include)
 
 #Include ImGUI to the project.
-include_directories${CMAKE_SOURCE_DIR}/imgui)
+include_directories(${CMAKE_SOURCE_DIR}/imgui)
 
+add_subdirectory(imgui)
 add_subdirectory(noiseutils)
 add_subdirectory(ECS)
 add_subdirectory(map)
 
-target_link_libraries(AgEngine ${LIBNOISE_LIBRARIES} sfml-audio sfml-graphics sfml-window sfml-system ecs map noiseutils)
+target_link_libraries(AgEngine ${OPENGL_gl_LIBRARY} ${LIBNOISE_LIBRARIES} sfml-audio sfml-graphics sfml-window sfml-system imgui ecs map noiseutils)
 
 #set (source "${CMAKE_SOURCE_DIR}/res")
 #set (destination "${CMAKE_CURRENT_BINARY_DIR}/res")

@@ -38,7 +38,7 @@ add_subdirectory(noiseutils)
 add_subdirectory(ECS)
 add_subdirectory(map)
 
-target_link_libraries(AgEngine ${OPENGL_gl_LIBRARY} ${LIBNOISE_LIBRARIES} sfml-audio sfml-graphics sfml-window sfml-system imgui ecs map noiseutils)
+target_link_libraries(AgEngine ${OPENGL_LIBRARIES} ${LIBNOISE_LIBRARIES} sfml-audio sfml-graphics sfml-window sfml-system imgui ecs map noiseutils)
 
 #set (source "${CMAKE_SOURCE_DIR}/res")
 #set (destination "${CMAKE_CURRENT_BINARY_DIR}/res")

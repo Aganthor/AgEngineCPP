@@ -18,5 +18,17 @@ public:
   void init();
 
 private:
+  void showGeneratorOptions();
+  void renderMap();
+
+  void loadTextures();
+
+private:
   sf::RenderWindow m_SFMLWindow;
+
+  sf::Texture m_waterTexture;
+  sf::Texture m_sandTexture;
+  sf::Texture m_grassTexture;
+  sf::Texture m_dirtTexture;
+  sf::Texture m_rockTexture;
 };

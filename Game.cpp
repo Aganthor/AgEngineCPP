@@ -6,6 +6,16 @@
 
 #include <SFML/Graphics.hpp>
 
+float frequency = 2.0;
+float flatScale = 0.125;
+float flatBias = -0.75;
+float perlinFreq = 0.5;
+float perlinPers = -0.25;
+bool regenerateMap = false;
+
+constexpr int MAP_MAX_WIDTH = 256;
+constexpr int MAP_MAX_HEIGHT = 256;
+
 Game::Game()
 {
 }
@@ -32,18 +42,10 @@ void Game::run()
   texture.loadFromFile("worldmap.bmp");
   sprite.setTexture(texture);
 
-  //Prepare ImGui stuff
-  sf::Color bgColor;
-
-  float color[3] = { 0.f, 0.f, 0.f };
-
-  // let's use char array as buffer, see next part
-  // for instructions on using std::string with ImGui
-  char windowTitle[255] = "ImGui + SFML = <3";
-
-  m_SFMLWindow.setTitle(windowTitle);
   m_SFMLWindow.resetGLStates(); // call it if you only draw ImGui. Otherwise not needed.
+
   sf::Clock deltaClock;
+  bool showGeneratorWindow = false;
 
   while (m_SFMLWindow.isOpen())
   {
@@ -52,32 +54,31 @@ void Game::run()
     while (m_SFMLWindow.pollEvent(event))
     {
       ImGui::SFML::ProcessEvent(event);
+
       if (event.type == sf::Event::Closed)
         m_SFMLWindow.close();
+
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+        showGeneratorWindow = true;
     }
     ImGui::SFML::Update(m_SFMLWindow, deltaClock.restart());
 
-    ImGui::Begin("Sample window"); // begin window
+    if (showGeneratorWindow)
+    {
+      showGeneratorOptions();
+      worldmap.setBaseFreq(frequency);
+      worldmap.setFlatBias(flatBias);
+      worldmap.setFlatScale(flatScale);
+      worldmap.setPerlinFreq(perlinFreq);
+      worldmap.setPerlinPers(perlinPers);
 
-    // Background color edit
-    if (ImGui::ColorEdit3("Background color", color)) {
-      // this code gets called if color value changes, so
-      // the background color is upgraded automatically!
-      bgColor.r = static_cast<sf::Uint8>(color[0] * 255.f);
-      bgColor.g = static_cast<sf::Uint8>(color[1] * 255.f);
-      bgColor.b = static_cast<sf::Uint8>(color[2] * 255.f);
+      if (regenerateMap)
+      {
+        worldmap.generateMap();
+        regenerateMap = false;
+      }
     }
-
-    // Window title text edit
-    ImGui::InputText("Window title", windowTitle, 255);
-
-    if (ImGui::Button("Update window title")) {
-      // this code gets if user clicks on the button
-      // yes, you could have written if(ImGui::InputText(...))
-      // but I do this to show how buttons work :)
-      m_SFMLWindow.setTitle(windowTitle);
-    }
-    ImGui::End(); // end window
+    //    ImGui::ShowDemoWindow();
 
     //Clear the window.
     m_SFMLWindow.clear(sf::Color::Black);
@@ -86,5 +87,50 @@ void Game::run()
     ImGui::SFML::Render(m_SFMLWindow);
 
     m_SFMLWindow.display();
+  }
+
+  ImGui::SFML::Shutdown();
+}
+
+void Game::showGeneratorOptions()
+{
+  ImGui::Begin("mapGenerator options");
+
+  ImGui::InputFloat("baseFlatterrain frequency", &frequency);
+  ImGui::SliderFloat("Flat terrain scale", &flatScale, 0.0f, 10.0f);
+  ImGui::SliderFloat("Flat terrain bias", &flatBias, 0.0f, 10.0f);
+  ImGui::SliderFloat("Perlin frequency", &perlinFreq, 0.0f, 10.0f);
+  ImGui::SliderFloat("Perlin persistence", &perlinPers, 0.0f, 10.0f);
+
+  if (ImGui::Button("Regenerate map"))
+    regenerateMap = true;
+
+  ImGui::End();
+}
+
+void Game::loadTextures()
+{
+  m_waterTexture.loadFromFile("res/tiles/shoals_shallow_water_10.png");
+  m_sandTexture.loadFromFile("res/tiles/sand.png");
+  m_grassTexture.loadFromFile("res/tiles/grass.png");
+  m_dirtTexture.loadFromFile("res/tiles/dirt.png");
+  m_rockTexture.loadFromFile("res/tiles/rock.png");
+}
+
+void Game::renderMap()
+{
+  //   renderer.AddGradientPoint (-0.6000, utils::Color (  0,   0, 128, 255)); // deeps
+  // renderer.AddGradientPoint ( 0.0625, utils::Color (240, 240,  64, 255)); // sand
+  // renderer.AddGradientPoint ( 0.1250, utils::Color ( 32, 160,   0, 255)); // grass
+  // renderer.AddGradientPoint ( 0.3750, utils::Color (224, 224,   0, 255)); // dirt
+  // renderer.AddGradientPoint ( 0.7500, utils::Color (128, 128, 128, 255)); // rock
+
+  sf::Sprite sprite;
+
+  for (auto x = 0; x < MAP_MAX_WIDTH; ++x)
+  {
+    for (auto y = 0; y < MAP_MAX_HEIGHT; ++y)
+    {
+    }
   }
 }

@@ -1,6 +1,5 @@
 #include "worldmap.h"
 
-#include <noise/noise.h>
 #include "../noiseutils/noiseutils.h"
 
 using namespace noise;
@@ -9,7 +8,8 @@ using namespace noise;
 namespace map
 {
 
-WorldMap::WorldMap()
+WorldMap::WorldMap() : m_baseFrequency{2.0}, m_flatScale{0.125}, m_flatBias{-0.75},
+                       m_perlinFreq{0.5}, m_perlinPers{-0.25}
 {
 }
 
@@ -19,37 +19,29 @@ WorldMap::~WorldMap()
 
 void WorldMap::generateMap()
 {
-  //  module::Perlin myModule;
-  utils::NoiseMap heightMap;
-  utils::NoiseMapBuilderPlane heightMapBuilder;
+  //  utils::NoiseMap heightMap;
+  //  utils::NoiseMapBuilderPlane heightMapBuilder;
 
-  module::RidgedMulti mountainTerrain;
-  module::Billow baseFlatTerrain;
-  module::ScaleBias flatTerrain;
+  m_baseFlatTerrain.SetFrequency(m_baseFrequency);
 
-  baseFlatTerrain.SetFrequency(2.0);
+  m_flatTerrain.SetSourceModule(0, m_baseFlatTerrain);
+  m_flatTerrain.SetScale(m_flatScale);
+  m_flatTerrain.SetBias(m_flatBias);
 
-  flatTerrain.SetSourceModule(0, baseFlatTerrain);
-  flatTerrain.SetScale(0.125);
-  flatTerrain.SetBias(-0.75);
+  m_terrainType.SetFrequency(m_perlinFreq);
+  m_terrainType.SetPersistence(m_perlinPers);
+  m_terrainType.SetSeed(6);
 
-  module::Perlin terrainType;
-  terrainType.SetFrequency(0.5);
-  terrainType.SetPersistence(0.25);
+  m_terrainSelector.SetSourceModule(0, m_flatTerrain);
+  m_terrainSelector.SetSourceModule(1, m_mountainTerrain);
+  m_terrainSelector.SetControlModule(m_terrainType);
+  m_terrainSelector.SetBounds(0.0, 1000.0);
+  m_terrainSelector.SetEdgeFalloff(0.125);
 
-  module::Select terrainSelector;
-
-  terrainSelector.SetSourceModule(0, flatTerrain);
-  terrainSelector.SetSourceModule(1, mountainTerrain);
-  terrainSelector.SetControlModule(terrainType);
-  terrainSelector.SetBounds(0.0, 1000.0);
-  terrainSelector.SetEdgeFalloff(0.125);
-
-  module::Turbulence finalTerrain;
-  finalTerrain.SetSourceModule(0, terrainSelector);
-  finalTerrain.SetFrequency(4.0);
-  finalTerrain.SetPower(0.125);
-
+  m_finalTerrain.SetSourceModule(0, m_terrainSelector);
+  m_finalTerrain.SetFrequency(4.0);
+  m_finalTerrain.SetPower(0.25);
+  /*
   heightMapBuilder.SetSourceModule(terrainSelector);
   heightMapBuilder.SetDestNoiseMap(heightMap);
   heightMapBuilder.SetDestSize(800, 600);
@@ -57,11 +49,16 @@ void WorldMap::generateMap()
   heightMapBuilder.Build();
 
   utils::RendererImage renderer;
+
   utils::Image image;
 
   renderer.SetSourceNoiseMap(heightMap);
   renderer.SetDestImage(image);
   renderer.ClearGradient ();
+  renderer.AddGradientPoint (-0.6000, utils::Color (  0,   0, 128, 255)); // deeps
+  renderer.AddGradientPoint (-0.2500, utils::Color (  0,   0, 255, 255)); // shallow
+  renderer.AddGradientPoint ( 0.0000, utils::Color (  0, 128, 255, 255)); // shore
+  renderer.AddGradientPoint ( 0.0625, utils::Color (240, 240,  64, 255)); // sand
   renderer.AddGradientPoint ( 0.1250, utils::Color ( 32, 160,   0, 255)); // grass
   renderer.AddGradientPoint ( 0.3750, utils::Color (224, 224,   0, 255)); // dirt
   renderer.AddGradientPoint ( 0.7500, utils::Color (128, 128, 128, 255)); // rock
@@ -75,6 +72,7 @@ void WorldMap::generateMap()
   writer.SetSourceImage(image);
   writer.SetDestFilename("worldmap.bmp");
   writer.WriteDestFile();
+  */
 }
 
 bool WorldMap::LoadMap(const std::string& file)

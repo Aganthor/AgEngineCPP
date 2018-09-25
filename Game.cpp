@@ -15,6 +15,7 @@ bool regenerateMap = false;
 
 constexpr int MAP_MAX_WIDTH = 256;
 constexpr int MAP_MAX_HEIGHT = 256;
+constexpr int TILE_SIZE = 32;
 
 Game::Game()
 {
@@ -36,11 +37,11 @@ void Game::run()
 
   worldmap.generateMap();
 
-  sf::Texture texture;
-  sf::Sprite sprite;
+  //  sf::Texture texture;
+  //  sf::Sprite sprite;
 
-  texture.loadFromFile("worldmap.bmp");
-  sprite.setTexture(texture);
+  //  texture.loadFromFile("worldmap.bmp");
+  //  sprite.setTexture(texture);
 
   m_SFMLWindow.resetGLStates(); // call it if you only draw ImGui. Otherwise not needed.
 
@@ -83,7 +84,9 @@ void Game::run()
     //Clear the window.
     m_SFMLWindow.clear(sf::Color::Black);
 
-    m_SFMLWindow.draw(sprite);
+    //m_SFMLWindow.draw(sprite);
+    renderMap(worldmap);
+
     ImGui::SFML::Render(m_SFMLWindow);
 
     m_SFMLWindow.display();
@@ -117,7 +120,7 @@ void Game::loadTextures()
   m_rockTexture.loadFromFile("res/tiles/rock.png");
 }
 
-void Game::renderMap()
+void Game::renderMap(map::WorldMap& map)
 {
   //   renderer.AddGradientPoint (-0.6000, utils::Color (  0,   0, 128, 255)); // deeps
   // renderer.AddGradientPoint ( 0.0625, utils::Color (240, 240,  64, 255)); // sand
@@ -126,11 +129,33 @@ void Game::renderMap()
   // renderer.AddGradientPoint ( 0.7500, utils::Color (128, 128, 128, 255)); // rock
 
   sf::Sprite sprite;
+  float noiseValue = 0;
 
   for (auto x = 0; x < MAP_MAX_WIDTH; ++x)
   {
     for (auto y = 0; y < MAP_MAX_HEIGHT; ++y)
     {
+      noiseValue = map.getValueAt(x, y);
+      if (noiseValue <= -0.6000)
+      {
+        sprite.setTexture(m_waterTexture);
+
+      } else if (noiseValue <= 0.0625)
+      {
+        sprite.setTexture(m_sandTexture);
+      } else if (noiseValue <= 0.1250)
+      {
+        sprite.setTexture(m_grassTexture);
+      } else if (noiseValue <= 0.3750)
+      {
+        sprite.setTexture(m_dirtTexture);
+      } else if (noiseValue <= 0.7500)
+      {
+        sprite.setTexture(m_rockTexture);
+      }
+
+      sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
+      m_SFMLWindow.draw(sprite);
     }
   }
 }

@@ -7,6 +7,11 @@
 // manage the window.
 ///////////////////////////////////////////////////////////////////////////////
 
+namespace map
+{
+class WorldMap;
+}
+
 class Game
 {
 public:
@@ -19,7 +24,7 @@ public:
 
 private:
   void showGeneratorOptions();
-  void renderMap();
+  void renderMap(map::WorldMap& map);
 
   void loadTextures();
 

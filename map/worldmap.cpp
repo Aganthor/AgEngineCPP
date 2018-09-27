@@ -19,8 +19,8 @@ WorldMap::~WorldMap()
 
 void WorldMap::generateMap()
 {
-  //  utils::NoiseMap heightMap;
-  //  utils::NoiseMapBuilderPlane heightMapBuilder;
+    utils::NoiseMap heightMap;
+    utils::NoiseMapBuilderPlane heightMapBuilder;
 
   m_baseFlatTerrain.SetFrequency(m_baseFrequency);
 
@@ -41,8 +41,8 @@ void WorldMap::generateMap()
   m_finalTerrain.SetSourceModule(0, m_terrainSelector);
   m_finalTerrain.SetFrequency(4.0);
   m_finalTerrain.SetPower(0.25);
-  /*
-  heightMapBuilder.SetSourceModule(terrainSelector);
+
+  heightMapBuilder.SetSourceModule(m_finalTerrain);
   heightMapBuilder.SetDestNoiseMap(heightMap);
   heightMapBuilder.SetDestSize(800, 600);
   heightMapBuilder.SetBounds(6.0, 10.0, 1.0, 5.0);
@@ -72,7 +72,7 @@ void WorldMap::generateMap()
   writer.SetSourceImage(image);
   writer.SetDestFilename("worldmap.bmp");
   writer.WriteDestFile();
-  */
+
 }
 
 bool WorldMap::LoadMap(const std::string& file)

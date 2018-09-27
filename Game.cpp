@@ -29,6 +29,7 @@ void Game::init()
 {
   m_SFMLWindow.create(sf::VideoMode(800, 600), "AgEngine demo!");
   ImGui::SFML::Init(m_SFMLWindow);
+  loadTextures();
 }
 
 void Game::run()
@@ -140,16 +141,16 @@ void Game::renderMap(map::WorldMap& map)
       {
         sprite.setTexture(m_waterTexture);
 
-      } else if (noiseValue <= 0.0625)
+      } else if ((noiseValue <= 0.0625) && (noiseValue > -0.6000))
       {
         sprite.setTexture(m_sandTexture);
-      } else if (noiseValue <= 0.1250)
+      } else if ((noiseValue <= 0.1250) && (noiseValue > 0.0625))
       {
         sprite.setTexture(m_grassTexture);
-      } else if (noiseValue <= 0.3750)
+      } else if ((noiseValue <= 0.3750) && (noiseValue > 0.1250))
       {
         sprite.setTexture(m_dirtTexture);
-      } else if (noiseValue <= 0.7500)
+      } else if ((noiseValue <= 0.7500) && (noiseValue > 0.3750))
       {
         sprite.setTexture(m_rockTexture);
       }

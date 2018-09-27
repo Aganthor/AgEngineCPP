@@ -4,9 +4,6 @@
 [submodule "spdlog"]
 	path = spdlog
 	url = https://github.com/gabime/spdlog.git
-[submodule "imgui"]
-	path = imgui
-	url = https://github.com/ocornut/imgui.git
 [submodule "imgui-sfml"]
 	path = imgui-sfml
 	url = https://github.com/eliasdaler/imgui-sfml.git

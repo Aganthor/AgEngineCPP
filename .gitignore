@@ -344,3 +344,5 @@ ASALocalRun/
 .mfractor/
 /res/tiles/floor_vines_0_old.png
 /res/tiles/stone_brick_1.png
+/.dir-locals.el
+/.directory

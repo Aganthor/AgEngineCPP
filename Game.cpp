@@ -68,11 +68,11 @@ void Game::run()
     if (showGeneratorWindow)
     {
       showGeneratorOptions();
-      worldmap.setBaseFreq(frequency);
-      worldmap.setFlatBias(flatBias);
-      worldmap.setFlatScale(flatScale);
-      worldmap.setPerlinFreq(perlinFreq);
-      worldmap.setPerlinPers(perlinPers);
+      // worldmap.setBaseFreq(frequency);
+      // worldmap.setFlatBias(flatBias);
+      // worldmap.setFlatScale(flatScale);
+      // worldmap.setPerlinFreq(perlinFreq);
+      // worldmap.setPerlinPers(perlinPers);
 
       if (regenerateMap)
       {
@@ -136,7 +136,7 @@ void Game::renderMap(map::WorldMap& map)
   {
     for (auto y = 0; y < MAP_MAX_HEIGHT; ++y)
     {
-      noiseValue = map.getValueAt(x, y);
+      //      noiseValue = map.getValueAt(x, y);
       if (noiseValue <= -0.6000)
       {
         sprite.setTexture(m_waterTexture);

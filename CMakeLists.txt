@@ -23,11 +23,11 @@ else (OPENGL_FOUND)
 endif()
 
 # Include the libnoise library for perlin noise :)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake_modules/")
-find_package(LibNoise)
-if(LIBNOISE_FOUND)
-  include_directories(LIBNOISE_INCLUDE_DIR)
-endif()
+#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake_modules/")
+#find_package(LibNoise)
+#if(LIBNOISE_FOUND)
+#  include_directories(LIBNOISE_INCLUDE_DIR)
+#endif()
 
 #Include SOL2 header files
 include_directories(${CMAKE_SOURCE_DIR}/sol2/include)
@@ -36,11 +36,12 @@ include_directories(${CMAKE_SOURCE_DIR}/sol2/include)
 include_directories(${CMAKE_SOURCE_DIR}/imgui)
 
 add_subdirectory(imgui)
-add_subdirectory(noiseutils)
+#add_subdirectory(noiseutils)
+add_subdirectory(FastNoise)
 add_subdirectory(ECS)
 add_subdirectory(map)
 
-target_link_libraries(AgEngine ${OPENGL_LIBRARIES} ${LIBNOISE_LIBRARIES} sfml-audio sfml-graphics sfml-window sfml-system imgui ecs map noiseutils)
+target_link_libraries(AgEngine ${OPENGL_LIBRARIES} sfml-audio sfml-graphics sfml-window sfml-system imgui ecs map fastnoise)
 
 #set (source "${CMAKE_SOURCE_DIR}/res")
 #set (destination "${CMAKE_CURRENT_BINARY_DIR}/res")

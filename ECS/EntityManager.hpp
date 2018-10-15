@@ -7,8 +7,8 @@
 #include <typeinfo>
 #include <utility>
 
-#include "Entity.h"
-#include "Component.h"
+#include "Entity.hpp"
+#include "Component.hpp"
 
 namespace ecs
 {

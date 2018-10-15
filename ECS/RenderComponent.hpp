@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-#include "Component.h"
+#include "Component.hpp"
 
 namespace ecs
 {

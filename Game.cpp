@@ -1,5 +1,5 @@
-#include "Game.h"
-#include "map/worldmap.h"
+#include "Game.hpp"
+#include "map/worldmap.hpp"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui-SFML.h"
@@ -32,6 +32,31 @@ void Game::init()
   loadTextures();
 }
 
+
+//
+// WIll handle keyboard and mouse input!
+//
+void Game::handleEvent()
+{
+}
+
+//
+// Will update the game logic.
+//
+void Game::update(float dt)
+{
+}
+
+//
+// Render the game!
+//
+void Game::render()
+{
+}
+
+//
+// The main game loop!
+//
 void Game::run()
 {
   map::WorldMap worldmap;

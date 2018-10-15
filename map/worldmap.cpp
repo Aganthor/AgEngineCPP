@@ -1,4 +1,4 @@
-#include "worldmap.h"
+#include "worldmap.hpp"
 
 //#include "../noiseutils/noiseutils.h"
 

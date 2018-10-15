@@ -346,3 +346,5 @@ ASALocalRun/
 /res/tiles/stone_brick_1.png
 /.dir-locals.el
 /.directory
+/.kdev4/AgEngine.kdev4
+/AgEngine.kdev4

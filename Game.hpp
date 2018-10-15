@@ -19,8 +19,12 @@ public:
   ~Game();
 
 
-  void run();
   void init();
+  void run();
+  void handleEvent();
+  void update(float dt);
+  void render();
+  
 
 private:
   void showGeneratorOptions();

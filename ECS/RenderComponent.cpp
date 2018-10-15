@@ -1,4 +1,4 @@
-#include "RenderComponent.h"
+#include "RenderComponent.hpp"
 
 namespace ecs
 {

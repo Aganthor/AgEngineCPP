@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#dolphin files
+.directory
+
 #Cmake files
 CMakeCache.txt
 CMakeFiles

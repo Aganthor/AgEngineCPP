@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 
-#include <sfml/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 class TextureManager
 {

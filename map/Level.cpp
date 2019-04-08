@@ -2,10 +2,10 @@
 
 #include <utility>
 
-#include <sfml/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 #include "BaseMapGenerator.hpp"
-#include "MapConstants.h"
+#include "MapConstants.hpp"
 #include "TileType.hpp"
 
 namespace map
@@ -15,9 +15,6 @@ namespace map
 		loadTextureFiles();
 	}
 
-	Level::~Level()
-	{
-	}
 
 	void Level::generateLevel(BaseMapGenerator& mapGenerator)
 	{
@@ -44,19 +41,19 @@ namespace map
 				}
 				else if ((mapValue >= 0.0) && (mapValue < 0.0625)) //shore
 				{
-					m_levelData.emplace_back(std::make_unique<TileInfo>(x, y, TileType::SHORE, false, false, false));
+					m_levelData.emplace_back(std::make_unique<TileInfo>(x, y, TileType::SHORE, false, false, true));
 				}
 				else if ((mapValue >= 0.0625) && (mapValue < 0.1250)) //sand
 				{
-					m_levelData.emplace_back(std::make_unique<TileInfo>(x, y, TileType::SAND, false, false, false));
+					m_levelData.emplace_back(std::make_unique<TileInfo>(x, y, TileType::SAND, false, false, true));
 				}
 				else if ((mapValue >= 0.1250) && (mapValue < 0.3750)) //grass
 				{
-					m_levelData.emplace_back(std::make_unique<TileInfo>(x, y, TileType::GRASS, false, false, false));
+					m_levelData.emplace_back(std::make_unique<TileInfo>(x, y, TileType::GRASS, false, false, true));
 				}
 				else if ((mapValue >= 0.3750) && (mapValue < 0.75)) //dirt
 				{
-					m_levelData.emplace_back(std::make_unique<TileInfo>(x, y, TileType::DIRT, false, false, false));
+					m_levelData.emplace_back(std::make_unique<TileInfo>(x, y, TileType::DIRT, false, false, true));
 				}
 				else if ((mapValue >= 0.75) && (mapValue < 1.0)) //rock
 				{
@@ -73,7 +70,7 @@ namespace map
 	void Level::renderLevel(sf::RenderWindow& window)
 	{
 	}
-
+	
 	void Level::loadTextureFiles()
 	{
 		m_textureManager.addTexture("deep_water");

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <sfml/System/Vector2.hpp>
+#include <SFML/System/Vector2.hpp>
 
 #include "BaseMapGenerator.hpp"
 #include "../FastNoise/FastNoise.h"

@@ -35,13 +35,14 @@ include_directories(${CMAKE_SOURCE_DIR}/sol2/include)
 #Include ImGUI to the project.
 include_directories(${CMAKE_SOURCE_DIR}/imgui)
 
+add_subdirectory(utility)
 add_subdirectory(imgui)
 #add_subdirectory(noiseutils)
 add_subdirectory(FastNoise)
 add_subdirectory(ECS)
 add_subdirectory(map)
 
-target_link_libraries(AgEngine ${OPENGL_LIBRARIES} sfml-audio sfml-graphics sfml-window sfml-system imgui ecs map fastnoise)
+target_link_libraries(AgEngine ${OPENGL_LIBRARIES} sfml-audio sfml-graphics sfml-window sfml-system imgui ecs map fastnoise utility)
 
 #set (source "${CMAKE_SOURCE_DIR}/res")
 #set (destination "${CMAKE_CURRENT_BINARY_DIR}/res")

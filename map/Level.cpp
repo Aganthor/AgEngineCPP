@@ -69,6 +69,14 @@ namespace map
 
 	void Level::renderLevel(sf::RenderWindow& window)
 	{
+		sf::Sprite sprite;
+
+		for (auto &tileInfo: m_levelData)
+		{
+			
+		}
+
+
 	}
 	
 	void Level::loadTextureFiles()

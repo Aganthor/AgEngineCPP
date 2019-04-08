@@ -5,6 +5,8 @@
 
 #include <SFML/Graphics.hpp>
 
+//TODO: make it so that it indexes with tiletypes.
+
 class TextureManager
 {
 public:

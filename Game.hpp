@@ -9,7 +9,7 @@
 
 namespace map
 {
-class WorldMap;
+class WorldMapGenerator;
 }
 
 class Game
@@ -28,7 +28,7 @@ public:
 
 private:
   void showGeneratorOptions();
-  void renderMap(map::WorldMap& map);
+  void renderMap(map::WorldMapGenerator& map);
 
   void loadTextures();
 

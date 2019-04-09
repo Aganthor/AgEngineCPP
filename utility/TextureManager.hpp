@@ -5,6 +5,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../map/TileType.hpp"
+
 //TODO: make it so that it indexes with tiletypes.
 
 class TextureManager
@@ -13,12 +15,12 @@ public:
 	TextureManager() {}
 	~TextureManager() {}
 
-    sf::Texture& getTexture(const std::string& name);
+    sf::Texture& getTexture(map::TileType type);
 
-    void addTexture(const std::string& name);
-    void removeTexture(const std::string& name);
+    void addTexture(const std::string& name, map::TileType type);
+    void removeTexture(map::TileType type);
 
 
 private:
-    std::map<std::string, sf::Texture> m_textureMap;
+    std::map<map::TileType, sf::Texture> m_textureMap;
 };

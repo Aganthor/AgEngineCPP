@@ -78,17 +78,17 @@ namespace map
 
 		}
 	}
-	
+
 	void Level::loadTextureFiles()
 	{
-		m_textureManager.addTexture("deep_water");
-		m_textureManager.addTexture("shallow_water");
-		m_textureManager.addTexture("dirt");
-		m_textureManager.addTexture("grass");
-		m_textureManager.addTexture("rock");
-		m_textureManager.addTexture("sand");
-		m_textureManager.addTexture("shore");
-		m_textureManager.addTexture("snow");
+		m_textureManager.addTexture("deep_water", TileType::DEEP_WATER);
+		m_textureManager.addTexture("shallow_water", TileType::SHALLOW_WATER);
+		m_textureManager.addTexture("dirt", TileType::DIRT);
+		m_textureManager.addTexture("grass", TileType::GRASS);
+		m_textureManager.addTexture("rock", TileType::ROCK);
+		m_textureManager.addTexture("sand", TileType::SAND);
+		m_textureManager.addTexture("shore", TileType::SHORE);
+		m_textureManager.addTexture("snow", TileType::SNOW);
 	}
 
     //
@@ -98,28 +98,4 @@ namespace map
 	{
         return *m_levelData[y * m_levelWidth + x];
 	}
-
-    TileType getTileType(const std::string& tilename)
-    {
-        if (tilename == "deep_water")
-            return TileType::DEEP_WATER;
-        else if (tilename == "shallow_water")
-            return TileType::SHALLOW_WATER;
-        else if (tilename == "dirt")
-            return TileType::DIRT;
-        else if (tilename == "grass")
-            return TileType::GRASS;
-        else if (tilename == "rock")
-            return TileType::ROCK;
-        else if (tilename == "sand")
-            return TileType::SAND;
-        else if (tilename == "shore")
-            return TileType::SHORE;
-        else if (tilename == "snow")
-            return TileType::SNOW;
-        else
-            return TileType::NONE;
-    }
-
-
-}
+} // End of namespace map.

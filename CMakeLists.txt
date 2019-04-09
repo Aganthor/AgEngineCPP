@@ -7,7 +7,7 @@ set(CMAKE_BUILD_TYPE Debug)
 add_executable(AgEngine main.cpp Game.cpp)
 
 #SFML linking and include
-find_package(SFML REQUIRED COMPONENTS audio graphics window system)
+find_package(SFML 2.5 COMPONENTS audio graphics window system REQUIRED)
 if(NOT SFML_FOUND)
     message(FATAL_ERROR "SFML couldn't be located!")
 endif()

@@ -7,7 +7,8 @@ namespace map
 	//
 	enum class TileType
 	{
-		DEEP_WATER,
+        NONE,
+        DEEP_WATER,
 		SHALLOW_WATER,
 		SHORE,
 		SAND,

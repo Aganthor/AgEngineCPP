@@ -18,8 +18,7 @@ void TextureManager::addTexture(const std::string & name)
 	}
 	else
 	{
-		std::pair<std::string, sf::Texture> item = std::make_pair(name, texture);
-		m_textureMap.insert(item);
+        m_textureMap.insert(std::make_pair(name, texture));
 	}
 }
 

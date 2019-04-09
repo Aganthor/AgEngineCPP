@@ -18,16 +18,14 @@ namespace map
 
 	void Level::generateLevel(BaseMapGenerator& mapGenerator)
 	{
-		mapGenerator.setMapWidth(map::WORLDMAP_WIDTH);
-		mapGenerator.setMapHeight(map::WORLDMAP_HEIGHT);
+        m_levelWidth = mapGenerator.getMapWidth();
+        int levelHeight = mapGenerator.getMapHeight();
 
-		mapGenerator.generateMap();
+        m_levelData.resize(m_levelWidth * levelHeight);
 
-		m_levelData.resize(mapGenerator.getMapWidth() * mapGenerator.getMapHeight());
-
-		for (auto y = 0; y < mapGenerator.getMapHeight(); ++y)
+        for (auto y = 0; y < levelHeight; ++y)
 		{
-			for (auto x = 0; x < mapGenerator.getMapWidth(); ++x)
+            for (auto x = 0; x < m_levelWidth; ++x)
 			{
 				float mapValue = mapGenerator.getValueAt(x, y);
 
@@ -73,10 +71,12 @@ namespace map
 
 		for (auto &tileInfo: m_levelData)
 		{
-			
+            sprite.setTexture(m_textureManager.getTexture("grass"));
+            //TODO : doesn't seem to work!
+            sprite.setPosition((*tileInfo).x, (*tileInfo).y);
+            window.draw(sprite);
+
 		}
-
-
 	}
 	
 	void Level::loadTextureFiles()
@@ -91,12 +91,35 @@ namespace map
 		m_textureManager.addTexture("snow");
 	}
 
-
-	/*
+    //
+    // Used to get the specific tile information at location x and y.
+    //
 	TileInfo & Level::getTileInfo(int x, int y)
 	{
-		// TODO: insert return statement here
+        return *m_levelData[y * m_levelWidth + x];
 	}
-	*/
+
+    TileType getTileType(const std::string& tilename)
+    {
+        if (tilename == "deep_water")
+            return TileType::DEEP_WATER;
+        else if (tilename == "shallow_water")
+            return TileType::SHALLOW_WATER;
+        else if (tilename == "dirt")
+            return TileType::DIRT;
+        else if (tilename == "grass")
+            return TileType::GRASS;
+        else if (tilename == "rock")
+            return TileType::ROCK;
+        else if (tilename == "sand")
+            return TileType::SAND;
+        else if (tilename == "shore")
+            return TileType::SHORE;
+        else if (tilename == "snow")
+            return TileType::SNOW;
+        else
+            return TileType::NONE;
+    }
+
 
 }

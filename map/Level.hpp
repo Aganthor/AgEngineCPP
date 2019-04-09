@@ -29,11 +29,17 @@ namespace map
 
         void renderLevel(sf::RenderWindow& window);
 
+        TileInfo& getTileInfo(int x, int y);
+
     private:
         void loadTextureFiles();
+
+        //TEMP function...
+        TileType getTileType(const std::string& tilename);
 
     private:
         std::vector<std::unique_ptr<TileInfo>> m_levelData;        
         TextureManager m_textureManager;
+        int m_levelWidth; //Used with our getTileInfo for indexing purposes.
     };
 }

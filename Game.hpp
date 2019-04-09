@@ -7,11 +7,6 @@
 // manage the window.
 ///////////////////////////////////////////////////////////////////////////////
 
-namespace map
-{
-class WorldMapGenerator;
-}
-
 class Game
 {
 public:
@@ -28,16 +23,7 @@ public:
 
 private:
   void showGeneratorOptions();
-  void renderMap(map::WorldMapGenerator& map);
-
-  void loadTextures();
 
 private:
   sf::RenderWindow m_SFMLWindow;
-
-  sf::Texture m_waterTexture;
-  sf::Texture m_sandTexture;
-  sf::Texture m_grassTexture;
-  sf::Texture m_dirtTexture;
-  sf::Texture m_rockTexture;
 };

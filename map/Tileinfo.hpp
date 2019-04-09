@@ -1,5 +1,7 @@
 #pragma once
 
+//#include <SFML/Graphics.hpp>
+
 #include "TileType.hpp"
 
 namespace map
@@ -7,7 +9,7 @@ namespace map
 	//
 	// A tile struct to represent information for a particular tile on the map.
 	//
-	struct TileInfo
+    struct TileInfo// : public sf::Drawable, public sf::Transformable
 	{
 		int x, y;
 		TileType tileType;

@@ -13,12 +13,12 @@ public:
 	TextureManager() {}
 	~TextureManager() {}
 
-	sf::Texture& getTexture(const std::string& name);
+    sf::Texture& getTexture(const std::string& name);
 
-	void addTexture(const std::string& name);
-	void removeTexture(const std::string& name);
+    void addTexture(const std::string& name);
+    void removeTexture(const std::string& name);
 
 
 private:
-	std::map<std::string, sf::Texture> m_textureMap;
+    std::map<std::string, sf::Texture> m_textureMap;
 };

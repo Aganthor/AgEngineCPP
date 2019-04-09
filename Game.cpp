@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "map/WorldMapGenerator.hpp"
+#include "map/Level.hpp"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui-SFML.h"
@@ -27,9 +28,8 @@ Game::~Game()
 
 void Game::init()
 {
-  m_SFMLWindow.create(sf::VideoMode(800, 600), "AgEngine demo!");
-  ImGui::SFML::Init(m_SFMLWindow);
-  loadTextures();
+	m_SFMLWindow.create(sf::VideoMode(800, 600), "AgEngine demo!");
+	ImGui::SFML::Init(m_SFMLWindow);
 }
 
 
@@ -59,117 +59,81 @@ void Game::render()
 //
 void Game::run()
 {
-  map::WorldMapGenerator worldMap(MAP_MAX_WIDTH, MAP_MAX_HEIGHT);
+	map::WorldMapGenerator worldMap ( MAP_MAX_WIDTH, MAP_MAX_HEIGHT );
+	
+	worldMap.setSeed(128);
+	worldMap.setOctaves(2);
+	worldMap.setScale(1.0f);
+	worldMap.setOffset(sf::Vector2f(5,5));
+	worldMap.setLacunarity(0.456f);
+	worldMap.setPersistance(1.2f);
+	
+	worldMap.generateMap();
 
-  worldMap.setSeed(128);
-  worldMap.setOctaves(2);
-  worldMap.setScale(1.0f);
-  worldMap.setOffset(sf::Vector2f(5,5));
-  worldMap.setLacunarity(0.456f);
-  worldMap.setPersistance(1.2f);
+    map::Level level;
 
-
-  m_SFMLWindow.resetGLStates(); // call it if you only draw ImGui. Otherwise not needed.
-
-  sf::Clock deltaClock;
-  bool showGeneratorWindow = false;
-
-  while (m_SFMLWindow.isOpen()) {
-    sf::Event event;
-
-    while (m_SFMLWindow.pollEvent(event)) {
-      ImGui::SFML::ProcessEvent(event);
-
-      if (event.type == sf::Event::Closed)
-        m_SFMLWindow.close();
-
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
-        showGeneratorWindow = true;
-    }
-    ImGui::SFML::Update(m_SFMLWindow, deltaClock.restart());
-
-    if (showGeneratorWindow) {
-      showGeneratorOptions();
-
-      if (regenerateMap) {
-        worldMap.setScale(flatScale);
-        worldMap.setPersistance(perlinPers);
-        regenerateMap = false;
-      }
-    }
-    //    ImGui::ShowDemoWindow();
-
-    // Clear the window.
-    m_SFMLWindow.clear(sf::Color::Black);
-
-    renderMap(worldMap);
-
-    ImGui::SFML::Render(m_SFMLWindow);
-
-    m_SFMLWindow.display();
-  }
-
-  ImGui::SFML::Shutdown();
+    level.generateLevel(worldMap);
+	
+	m_SFMLWindow.resetGLStates(); // call it if you only draw ImGui. Otherwise not needed.
+	
+	sf::Clock deltaClock;
+	bool showGeneratorWindow = false;
+	
+	while (m_SFMLWindow.isOpen()) 
+	{
+		sf::Event event;
+		
+		while (m_SFMLWindow.pollEvent(event)) 
+		{
+			ImGui::SFML::ProcessEvent(event);
+			
+			if (event.type == sf::Event::Closed)
+				m_SFMLWindow.close();
+			
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+				showGeneratorWindow = true;
+		}
+		ImGui::SFML::Update(m_SFMLWindow, deltaClock.restart());
+		
+		if (showGeneratorWindow) 
+		{
+			showGeneratorOptions();
+			
+			if (regenerateMap) 
+			{
+				worldMap.setScale(flatScale);
+				worldMap.setPersistance(perlinPers);
+				regenerateMap = false;
+			}
+		}
+		//    ImGui::ShowDemoWindow();
+		
+		// Clear the window.
+		m_SFMLWindow.clear(sf::Color::Black);
+		
+        level.renderLevel(m_SFMLWindow);
+		
+		ImGui::SFML::Render(m_SFMLWindow);
+		
+		m_SFMLWindow.display();
+	}
+	
+	ImGui::SFML::Shutdown();
 }
 
 void Game::showGeneratorOptions()
 {
-  ImGui::Begin("mapGenerator options");
-
-  ImGui::InputFloat("baseFlatterrain frequency", &frequency);
-  ImGui::SliderFloat("Flat terrain scale", &flatScale, 0.0f, 10.0f);
-  ImGui::SliderFloat("Flat terrain bias", &flatBias, 0.0f, 10.0f);
-  ImGui::SliderFloat("Perlin frequency", &perlinFreq, 0.0f, 10.0f);
-  ImGui::SliderFloat("Perlin persistence", &perlinPers, 0.0f, 10.0f);
-
-  if (ImGui::Button("Regenerate map"))
-    regenerateMap = true;
-
-  ImGui::End();
+	ImGui::Begin("mapGenerator options");
+	
+	ImGui::InputFloat("baseFlatterrain frequency", &frequency);
+	ImGui::SliderFloat("Flat terrain scale", &flatScale, 0.0f, 10.0f);
+	ImGui::SliderFloat("Flat terrain bias", &flatBias, 0.0f, 10.0f);
+	ImGui::SliderFloat("Perlin frequency", &perlinFreq, 0.0f, 10.0f);
+	ImGui::SliderFloat("Perlin persistence", &perlinPers, 0.0f, 10.0f);
+	
+	if (ImGui::Button("Regenerate map"))
+		regenerateMap = true;
+	
+	ImGui::End();
 }
 
-void Game::loadTextures()
-{/*
-  m_waterTexture.loadFromFile("res/tiles/shoals_shallow_water_10.png");
-  m_sandTexture.loadFromFile("res/tiles/sand.png");
-  m_grassTexture.loadFromFile("res/tiles/grass.png");
-  m_dirtTexture.loadFromFile("res/tiles/dirt.png");
-  m_rockTexture.loadFromFile("res/tiles/rock.png");
-  */
-}
-
-void Game::renderMap(map::WorldMapGenerator& map)
-{
-  /*
-  sf::Sprite sprite;
-  float noiseValue = 0;
-
-  for (auto x = 0; x < MAP_MAX_WIDTH; ++x)
-  {
-    for (auto y = 0; y < MAP_MAX_HEIGHT; ++y)
-    {
-      noiseValue = map.getValueAt(x, y);
-      if (noiseValue <= -0.6000)
-      {
-        sprite.setTexture(m_waterTexture);
-
-      } else if ((noiseValue <= 0.0625) && (noiseValue > -0.6000))
-      {
-        sprite.setTexture(m_sandTexture);
-      } else if ((noiseValue <= 0.1250) && (noiseValue > 0.0625))
-      {
-        sprite.setTexture(m_grassTexture);
-      } else if ((noiseValue <= 0.3750) && (noiseValue > 0.1250))
-      {
-        sprite.setTexture(m_dirtTexture);
-      } else if ((noiseValue <= 0.7500) && (noiseValue > 0.3750))
-      {
-        sprite.setTexture(m_rockTexture);
-      }
-
-      sprite.setPosition(x * TILE_SIZE, y * TILE_SIZE);
-      m_SFMLWindow.draw(sprite);
-    }
-  }
-  */
-}

@@ -70,11 +70,11 @@ namespace map
 		sf::Sprite sprite;
 
 		for (auto &tileInfo: m_levelData)
-		{
-            sprite.setTexture(m_textureManager.getTexture("grass"));
+		{/*
+            sprite.setTexture(m_textureManager.getTexture(TileType::GRASS));
             //TODO : doesn't seem to work!
             sprite.setPosition((*tileInfo).x, (*tileInfo).y);
-            window.draw(sprite);
+            window.draw(sprite);*/
 
 		}
 	}

@@ -44,17 +44,17 @@ add_subdirectory(map)
 
 target_link_libraries(AgEngine ${OPENGL_LIBRARIES} sfml-audio sfml-graphics sfml-window sfml-system imgui ecs map fastnoise utility)
 
-#set (source "${CMAKE_SOURCE_DIR}/res")
-#set (destination "${CMAKE_CURRENT_BINARY_DIR}/res")
-#add_custom_command(
-#    TARGET ${PROJECT_NAME} POST_BUILD
-#    COMMAND ${CMAKE_COMMAND} -E make_directory ${destination}
-#)
+set (source "${CMAKE_SOURCE_DIR}/res")
+set (destination "${CMAKE_CURRENT_BINARY_DIR}/res")
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${destination}
+)
 
-#add_custom_command(
-# TARGET ${PROJECT_NAME} POST_BUILD
+add_custom_command(
+ TARGET ${PROJECT_NAME} POST_BUILD
 ## COMMAND ${CMAKE_COMMAND} -E create_symlink ${source} ${destination}
-# COMMAND ${CMAKE_COMMAND} -E copy_directory ${source} ${destination}
-# DEPENDS ${destination}
-# COMMENT "symbolic link resources folder from ${source} => ${destination}"
-#)
+ COMMAND ${CMAKE_COMMAND} -E copy_directory ${source} ${destination}
+ DEPENDS ${destination}
+ COMMENT "symbolic link resources folder from ${source} => ${destination}"
+)

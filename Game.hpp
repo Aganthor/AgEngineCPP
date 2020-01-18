@@ -16,7 +16,7 @@ public:
 
   void init();
   void run();
-  void handleEvent();
+  void handleEvent(sf::Event event);
   void update(float dt);
   void render();
   
@@ -26,4 +26,7 @@ private:
 
 private:
   sf::RenderWindow m_SFMLWindow;
+  float m_zoomFactor {1.f};
+  float m_moveX {1.f};
+  float m_moveY {1.f};
 };

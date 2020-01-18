@@ -1,4 +1,7 @@
 #include "Game.hpp"
+
+#include <iostream>
+
 #include "map/WorldMapGenerator.hpp"
 #include "map/Level.hpp"
 
@@ -36,8 +39,34 @@ void Game::init()
 //
 // WIll handle keyboard and mouse input!
 //
-void Game::handleEvent()
+void Game::handleEvent(sf::Event event)
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		std::cout << "Zooming in..." << m_zoomFactor << std::endl;
+		m_zoomFactor -= 0.1f;
+		if (m_zoomFactor < 0.f)
+			m_zoomFactor = 0.f;
+	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+		std::cout << "Zooming out..." << m_zoomFactor << std::endl;
+		m_zoomFactor += 0.1f;
+		if (m_zoomFactor > 5.f)
+			m_zoomFactor = 5.f;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		m_moveX -= 50.f;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		m_moveX += 50.f;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		m_moveY -= 50.f;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		m_moveY += 50.f;
+	}
+
+
 }
 
 //
@@ -78,6 +107,7 @@ void Game::run()
 	
 	sf::Clock deltaClock;
 	bool showGeneratorWindow = false;
+
 	
 	while (m_SFMLWindow.isOpen()) 
 	{
@@ -92,6 +122,8 @@ void Game::run()
 			
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 				showGeneratorWindow = true;
+
+			handleEvent(event);
 		}
 		ImGui::SFML::Update(m_SFMLWindow, deltaClock.restart());
 		
@@ -111,7 +143,19 @@ void Game::run()
 		// Clear the window.
 		m_SFMLWindow.clear(sf::Color::Black);
 		
-        level.renderLevel(m_SFMLWindow);
+        
+		sf::View view;
+
+		//view.reset(sf::FloatRect(200.f, 200.f, 300.f, 200.f));
+		view.setSize(800.f, 600.f);
+
+		view.zoom(m_zoomFactor);
+
+		view.move(m_moveX, m_moveY);
+
+		m_SFMLWindow.setView(view);
+
+		level.renderLevel(m_SFMLWindow);
 		
 		ImGui::SFML::Render(m_SFMLWindow);
 		
